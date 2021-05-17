@@ -117,6 +117,21 @@ const definitions = [
     },
   },
   {
+    id: 'AiPlatformTools',
+    label: 'Predictions',
+    icon: 'brain',
+    buttons: [
+      {
+        id: 'ApplyMLTool',
+        label: 'Find Spine',
+        icon: 'square-o',
+        //
+        type: TOOLBAR_BUTTON_TYPES.COMMAND,
+        commandName: 'applyMlTool',
+      },
+    ],
+  },
+  {
     id: 'More',
     label: 'More',
     icon: 'ellipse-circle',

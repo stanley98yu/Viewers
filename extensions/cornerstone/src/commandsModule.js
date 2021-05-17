@@ -2,6 +2,7 @@ import cornerstone from 'cornerstone-core';
 import cornerstoneTools from 'cornerstone-tools';
 import OHIF from '@ohif/core';
 
+import aiPlatform from '../../../platform/viewer/src/googleCloud/api/AiPlatform';
 import setCornerstoneLayout from './utils/setCornerstoneLayout.js';
 import { getEnabledElement } from './state';
 import CornerstoneViewportDownloadForm from './CornerstoneViewportDownloadForm';
@@ -75,6 +76,45 @@ const commandsModule = ({ servicesManager }) => {
         let viewport = cornerstone.getViewport(enabledElement);
         viewport.invert = !viewport.invert;
         cornerstone.setViewport(enabledElement, viewport);
+      }
+    },
+    applyMlTool: async ({ viewports }) => {
+      // TODO: See if we should rotate or transform the image before sending?
+
+      const enabledElement = getEnabledElement(viewports.activeViewportIndex);
+
+      if (enabledElement) {
+        const { element, image, canvas } = cornerstone.getEnabledElement(
+          enabledElement
+        );
+        const uri = image.imageId.substr(7);
+        console.time('doMlRequest');
+        const results = await aiPlatform.doMlRequest(uri);
+        console.timeEnd('doMlRequest');
+
+        const bbox = results.predictions[0].bboxes[0];
+        const label = results.predictions[0].displayNames[0];
+        const confidence = results.predictions[0].confidences[0].toPrecision(5);
+
+        // Draw the bbox
+        const topLeft = [image.width * bbox[0], image.width * bbox[1]];
+        const width = (bbox[2] - bbox[0]) * image.width;
+        const height = (bbox[3] - bbox[1]) * image.height;
+        var ctx = canvas.getContext('2d');
+        ctx.beginPath();
+        ctx.setLineDash([6]);
+        ctx.lineWidth = '2';
+        ctx.strokeStyle = 'red';
+        ctx.font = '10px Arial';
+        ctx.fillStyle = 'red';
+        ctx.fillText(
+          `${label} (${confidence})`,
+          topLeft[0],
+          topLeft[1] + height + 10
+        );
+        ctx.rect(topLeft[0], topLeft[1], width, height);
+        ctx.stroke();
+        debugger;
       }
     },
     // TODO: this is receiving `evt` from `ToolbarRow`. We could use it to have
@@ -332,6 +372,11 @@ const commandsModule = ({ servicesManager }) => {
     },
     invertViewport: {
       commandFn: actions.invertViewport,
+      storeContexts: ['viewports'],
+      options: {},
+    },
+    applyMlTool: {
+      commandFn: actions.applyMlTool,
       storeContexts: ['viewports'],
       options: {},
     },
