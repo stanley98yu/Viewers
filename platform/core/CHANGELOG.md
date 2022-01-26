@@ -3,6 +3,292 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.16.7](https://github.com/OHIF/Viewers/compare/@ohif/core@2.16.6...@ohif/core@2.16.7) (2022-01-20)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+## [2.16.6](https://github.com/OHIF/Viewers/compare/@ohif/core@2.16.5...@ohif/core@2.16.6) (2022-01-13)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+## [2.16.5](https://github.com/OHIF/Viewers/compare/@ohif/core@2.16.4...@ohif/core@2.16.5) (2021-12-23)
+
+
+### Bug Fixes
+
+* DICOMFileLoadingListener typo in method name ([#2647](https://github.com/OHIF/Viewers/issues/2647)) ([761d54f](https://github.com/OHIF/Viewers/commit/761d54fbbfb376c20ee15794ef7bb7111f64a06f))
+
+
+
+
+
+## [2.16.4](https://github.com/OHIF/Viewers/compare/@ohif/core@2.16.3...@ohif/core@2.16.4) (2021-12-23)
+
+
+### Bug Fixes
+
+* SeriesTime and SeriesDate are only set for the first series and undefined for the remaining ones ([#2476](https://github.com/OHIF/Viewers/issues/2476)) ([6a401c9](https://github.com/OHIF/Viewers/commit/6a401c9e5204cb4f7af6aa33190ad5a8d0879de6))
+
+
+
+
+
+## [2.16.3](https://github.com/OHIF/Viewers/compare/@ohif/core@2.16.2...@ohif/core@2.16.3) (2021-12-02)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+## [2.16.2](https://github.com/OHIF/Viewers/compare/@ohif/core@2.16.1...@ohif/core@2.16.2) (2021-11-30)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+## [2.16.1](https://github.com/OHIF/Viewers/compare/@ohif/core@2.16.0...@ohif/core@2.16.1) (2021-10-26)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+# [2.16.0](https://github.com/OHIF/Viewers/compare/@ohif/core@2.15.1...@ohif/core@2.16.0) (2021-10-04)
+
+
+### Features
+
+* Added support for WADO servers built with static hosting (e.g. S3) ([#2566](https://github.com/OHIF/Viewers/issues/2566)) ([a046c6c](https://github.com/OHIF/Viewers/commit/a046c6c9017a84e5ead71d5113b5e892333b4130))
+
+
+
+
+
+## [2.15.1](https://github.com/OHIF/Viewers/compare/@ohif/core@2.15.0...@ohif/core@2.15.1) (2021-09-28)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+# [2.15.0](https://github.com/OHIF/Viewers/compare/@ohif/core@2.14.1...@ohif/core@2.15.0) (2021-09-23)
+
+
+### Features
+
+* Update to WADO Image Loader 4.0.3 to add dynamically imported WebAssembly codec support 🚀 ([#2537](https://github.com/OHIF/Viewers/issues/2537)) ([489d4b0](https://github.com/OHIF/Viewers/commit/489d4b0584f4657ceda1c5b9b68d5e9733827e47))
+
+
+
+
+
+## [2.14.1](https://github.com/OHIF/Viewers/compare/@ohif/core@2.14.0...@ohif/core@2.14.1) (2021-09-13)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+# [2.14.0](https://github.com/OHIF/Viewers/compare/@ohif/core@2.13.15...@ohif/core@2.14.0) (2021-09-09)
+
+
+### Features
+
+* OHIF-1000: Study prefetcher ([#2466](https://github.com/OHIF/Viewers/issues/2466)) ([8f26045](https://github.com/OHIF/Viewers/commit/8f2604509d24092b721f1333289d838820d68cac))
+
+
+
+
+
+## [2.13.15](https://github.com/OHIF/Viewers/compare/@ohif/core@2.13.14...@ohif/core@2.13.15) (2021-09-03)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+## [2.13.14](https://github.com/OHIF/Viewers/compare/@ohif/core@2.13.13...@ohif/core@2.13.14) (2021-08-30)
+
+
+### Bug Fixes
+
+* MPR metadata parsing for spacings ([#2517](https://github.com/OHIF/Viewers/issues/2517)) ([715dfc5](https://github.com/OHIF/Viewers/commit/715dfc556a3883de31d74012dcc99e431d91f57d))
+
+
+
+
+
+## [2.13.13](https://github.com/OHIF/Viewers/compare/@ohif/core@2.13.12...@ohif/core@2.13.13) (2021-06-03)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+## [2.13.12](https://github.com/OHIF/Viewers/compare/@ohif/core@2.13.11...@ohif/core@2.13.12) (2021-06-02)
+
+
+### Bug Fixes
+
+* **dicom-html:** Add parsed dicom meta info section ([#2419](https://github.com/OHIF/Viewers/issues/2419)) ([403688b](https://github.com/OHIF/Viewers/commit/403688b18c52468fc1101166ec0c1734fb710039))
+
+
+
+
+
+## [2.13.11](https://github.com/OHIF/Viewers/compare/@ohif/core@2.13.10...@ohif/core@2.13.11) (2021-05-17)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+## [2.13.10](https://github.com/OHIF/Viewers/compare/@ohif/core@2.13.9...@ohif/core@2.13.10) (2021-04-22)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+## [2.13.9](https://github.com/OHIF/Viewers/compare/@ohif/core@2.13.8...@ohif/core@2.13.9) (2021-04-22)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+## [2.13.8](https://github.com/OHIF/Viewers/compare/@ohif/core@2.13.7...@ohif/core@2.13.8) (2021-04-21)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+## [2.13.7](https://github.com/OHIF/Viewers/compare/@ohif/core@2.13.6...@ohif/core@2.13.7) (2021-04-21)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+## [2.13.6](https://github.com/OHIF/Viewers/compare/@ohif/core@2.13.5...@ohif/core@2.13.6) (2021-04-21)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+## [2.13.5](https://github.com/OHIF/Viewers/compare/@ohif/core@2.13.4...@ohif/core@2.13.5) (2021-04-16)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+## [2.13.4](https://github.com/OHIF/Viewers/compare/@ohif/core@2.13.3...@ohif/core@2.13.4) (2021-04-15)
+
+
+### Bug Fixes
+
+* **wl:** fix metadata provider window level issues after dicomweb update (string vs number) ([8681036](https://github.com/OHIF/Viewers/commit/8681036b2133cfc325658691a256a86b5e36705f))
+
+
+
+
+
+## [2.13.3](https://github.com/OHIF/Viewers/compare/@ohif/core@2.13.2...@ohif/core@2.13.3) (2021-03-26)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+## [2.13.2](https://github.com/OHIF/Viewers/compare/@ohif/core@2.13.1...@ohif/core@2.13.2) (2021-03-25)
+
+
+### Bug Fixes
+
+* IDC-2288: Update toolbar tabs after derived displayset loaded ([#2307](https://github.com/OHIF/Viewers/issues/2307)) ([6e723eb](https://github.com/OHIF/Viewers/commit/6e723ebced58852007ca553792c740976cfc4201))
+
+
+
+
+
+## [2.13.1](https://github.com/OHIF/Viewers/compare/@ohif/core@2.13.0...@ohif/core@2.13.1) (2021-03-09)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+# [2.13.0](https://github.com/OHIF/Viewers/compare/@ohif/core@2.12.5...@ohif/core@2.13.0) (2021-03-04)
+
+
+### Features
+
+* **log:** add new log service ([14d6454](https://github.com/OHIF/Viewers/commit/14d6454eafaa2ccb50e133c2945c9558052ea27e))
+
+
+
+
+
+## [2.12.5](https://github.com/OHIF/Viewers/compare/@ohif/core@2.12.4...@ohif/core@2.12.5) (2021-03-03)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+## [2.12.4](https://github.com/OHIF/Viewers/compare/@ohif/core@2.12.3...@ohif/core@2.12.4) (2021-02-25)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+## [2.12.3](https://github.com/OHIF/Viewers/compare/@ohif/core@2.12.2...@ohif/core@2.12.3) (2021-02-05)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
+## [2.12.2](https://github.com/OHIF/Viewers/compare/@ohif/core@2.12.1...@ohif/core@2.12.2) (2021-02-05)
+
+**Note:** Version bump only for package @ohif/core
+
+
+
+
+
 ## [2.12.1](https://github.com/OHIF/Viewers/compare/@ohif/core@2.12.0...@ohif/core@2.12.1) (2021-01-21)
 
 **Note:** Version bump only for package @ohif/core

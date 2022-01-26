@@ -1,5 +1,5 @@
 import './ViewerMain.css';
-
+import { servicesManager } from './../App.js';
 import { Component } from 'react';
 import { ConnectedViewportGrid } from './../components/ViewportGrid/index.js';
 import PropTypes from 'prop-types';
@@ -139,15 +139,54 @@ class ViewerMain extends Component {
       displaySetInstanceUID
     );
 
+    const { LoggerService, UINotificationService } = servicesManager.services;
+
     if (displaySet.isDerived) {
       const { Modality } = displaySet;
-      displaySet = displaySet.getSourceDisplaySet(this.props.studies);
+      if (Modality === 'SEG' && servicesManager) {
+        const onDisplaySetLoadFailureHandler = error => {
+          LoggerService.error({ error, message: error.message });
+          UINotificationService.show({
+            title: 'DICOM Segmentation Loader',
+            message: error.message,
+            type: 'error',
+            autoClose: true,
+          });
+        };
+
+        const { referencedDisplaySet } = displaySet.getSourceDisplaySet(
+          this.props.studies,
+          true,
+          onDisplaySetLoadFailureHandler
+        );
+        displaySet = referencedDisplaySet;
+      } else {
+        displaySet = displaySet.getSourceDisplaySet(this.props.studies);
+      }
 
       if (!displaySet) {
-        throw new Error(
-          `Referenced series for ${Modality} dataset not present.`
-        );
+        const error = new Error('Source data not present');
+        const message = 'Source data not present';
+        LoggerService.error({ error, message });
+        UINotificationService.show({
+          autoClose: false,
+          title: 'Fail to load series',
+          message,
+          type: 'error',
+        });
       }
+    }
+
+    if (displaySet.isModalitySupported === false) {
+      const error = new Error('Modality not supported');
+      const message = 'Modality not supported';
+      LoggerService.error({ error, message });
+      UINotificationService.show({
+        autoClose: false,
+        title: 'Fail to load series',
+        message,
+        type: 'error',
+      });
     }
 
     this.props.setViewportSpecificData(viewportIndex, displaySet);

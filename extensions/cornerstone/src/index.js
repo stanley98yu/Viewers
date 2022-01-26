@@ -36,13 +36,29 @@ export default {
   preRegistration({ servicesManager, configuration = {} }) {
     init({ servicesManager, configuration });
   },
-  getViewportModule({ commandsManager }) {
+  getViewportModule({ commandsManager, appConfig }) {
     const ExtendedOHIFCornerstoneViewport = props => {
+      /**
+       * TODO: This appears to be used to set the redux parameters for
+       * the viewport when new images are loaded. It's very ugly
+       * and we should remove it.
+       */
       const onNewImageHandler = jumpData => {
+        /** Do not trigger all viewports to render unnecessarily */
+        jumpData.refreshViewports = false;
         commandsManager.runCommand('jumpToImage', jumpData);
       };
+
+      const { studyPrefetcher } = appConfig;
+      const isStackPrefetchEnabled =
+        studyPrefetcher && !studyPrefetcher.enabled;
+
       return (
-        <OHIFCornerstoneViewport {...props} onNewImage={onNewImageHandler} />
+        <OHIFCornerstoneViewport
+          {...props}
+          onNewImage={onNewImageHandler}
+          isStackPrefetchEnabled={isStackPrefetchEnabled}
+        />
       );
     };
 

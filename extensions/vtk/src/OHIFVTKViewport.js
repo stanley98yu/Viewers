@@ -72,7 +72,7 @@ class OHIFVTKViewport extends Component {
   };
 
   static defaultProps = {
-    onScroll: () => {},
+    onScroll: () => { },
   };
 
   static id = 'OHIFVTKViewport';
@@ -271,7 +271,7 @@ class OHIFVTKViewport extends Component {
 
     volumeMapper.setSampleDistance(sampleDistance);
 
-    // Be generous to surpress warnings, as the logging really hurts performance.
+    // Be generous to suppress warnings, as the logging really hurts performance.
     // TODO: maybe we should auto adjust samples to 1000.
     volumeMapper.setMaximumSamplesPerRay(4000);
 
@@ -360,12 +360,15 @@ class OHIFVTKViewport extends Component {
     } catch (error) {
       const errorTitle = 'Failed to load 2D MPR';
       console.error(errorTitle, error);
-      const { UINotificationService } = this.props.servicesManager.services;
+      const {
+        UINotificationService,
+        LoggerService,
+      } = this.props.servicesManager.services;
       if (this.props.viewportIndex === 0) {
         const message = error.message.includes('buffer')
           ? 'Dataset is too big to display in MPR'
           : error.message;
-        console.error(errorTitle, error);
+        LoggerService.error({ error, message });
         UINotificationService.show({
           title: errorTitle,
           message,
@@ -395,7 +398,7 @@ class OHIFVTKViewport extends Component {
 
     if (
       displaySet.displaySetInstanceUID !==
-        prevDisplaySet.displaySetInstanceUID ||
+      prevDisplaySet.displaySetInstanceUID ||
       displaySet.SOPInstanceUID !== prevDisplaySet.SOPInstanceUID ||
       displaySet.frameIndex !== prevDisplaySet.frameIndex
     ) {
@@ -428,11 +431,15 @@ class OHIFVTKViewport extends Component {
     };
 
     const onPixelDataInsertedErrorCallback = error => {
-      const { UINotificationService } = this.props.servicesManager.services;
+      const {
+        UINotificationService,
+        LoggerService,
+      } = this.props.servicesManager.services;
 
       if (!this.hasError) {
         if (this.props.viewportIndex === 0) {
           // Only show the notification from one viewport 1 in MPR2D.
+          LoggerService.error({ error, message: error.message });
           UINotificationService.show({
             title: 'MPR Load Error',
             message: error.message,

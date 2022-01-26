@@ -155,7 +155,9 @@ const SegmentationPanel = ({
 
     const brushStackState = getBrushStackState();
     brushStackState.activeLabelmapIndex = newLabelmapIndex;
-    setState(state => ({ ...state, selectedSegmentation }));
+    if (selectedSegmentation) {
+      setState(state => ({ ...state, selectedSegmentation }));
+    }
 
     refreshViewports();
 
@@ -189,6 +191,10 @@ const SegmentationPanel = ({
       'extensiondicomsegmentationsegloaded',
       refreshSegmentations
     );
+    document.addEventListener(
+      'extensiondicomsegmentationsegselected',
+      updateSegmentationComboBox
+    );
 
     /*
      * These are specific to each element;
@@ -207,6 +213,10 @@ const SegmentationPanel = ({
         'extensiondicomsegmentationsegloaded',
         refreshSegmentations
       );
+      document.removeEventListener(
+        'extensiondicomsegmentationsegselected',
+        updateSegmentationComboBox
+      );
       cornerstoneTools.store.state.enabledElements.forEach(enabledElement =>
         enabledElement.removeEventListener(
           'cornerstonetoolslabelmapmodified',
@@ -214,7 +224,32 @@ const SegmentationPanel = ({
         )
       );
     };
-  }, [activeIndex, viewports]);
+  }, [
+    activeIndex,
+    updateSegmentationComboBox,
+    viewports,
+  ]);
+
+  const updateSegmentationComboBox = e => {
+    const index = e.detail.activatedLabelmapIndex;
+    if (index !== -1) {
+      setState(state => ({ ...state, selectedSegmentation: index }));
+    } else {
+      cleanSegmentationComboBox();
+    }
+  };
+
+  const cleanSegmentationComboBox = () => {
+    setState(state => ({
+      ...state,
+      segmentsHidden: [],
+      segmentNumbers: [],
+      labelMapList: [],
+      segmentList: [],
+      isDisabled: true,
+      selectedSegmentation: -1,
+    }));
+  };
 
   const refreshSegmentations = () => {
     const activeViewport = getActiveViewport();
@@ -277,7 +312,11 @@ const SegmentationPanel = ({
       activeViewport.SeriesInstanceUID
     );
 
-    return referencedSegDisplaysets.map((displaySet, index) => {
+    const filteredReferencedSegDisplaysets = referencedSegDisplaysets.filter(
+      segDisplay => segDisplay.loadError !== true
+    );
+
+    return filteredReferencedSegDisplaysets.map((displaySet, index) => {
       const {
         labelmapIndex,
         originLabelMapIndex,
@@ -289,7 +328,7 @@ const SegmentationPanel = ({
       /* Map to display representation */
       const dateStr = `${SeriesDate}:${SeriesTime}`.split('.')[0];
       const date = moment(dateStr, 'YYYYMMDD:HHmmss');
-      const displayDate = date.format('ddd, MMM Do YYYY');
+      const displayDate = date.format('ddd, MMM Do YYYY, h:mm:ss a');
       const displayDescription = displaySet.SeriesDescription;
 
       return {
@@ -392,23 +431,43 @@ const SegmentationPanel = ({
     return enabledElements[activeIndex].element;
   };
 
-  const onSegmentVisibilityChangeHandler = (isVisible, segmentNumber) => {
-    /** Get all labelmaps with this segmentNumber (overlapping segments) */
-    const { labelmaps3D } = getBrushStackState();
-    const possibleLabelMaps3D = labelmaps3D.filter(({ labelmaps2D }) => {
-      return labelmaps2D.some(({ segmentsOnLabelmap }) =>
-        segmentsOnLabelmap.includes(segmentNumber)
-      );
-    });
-
+  const onSegmentVisibilityChangeHandler = (
+    isVisible,
+    segmentNumber,
+    labelmap3D
+  ) => {
     let segmentsHidden = [];
-    possibleLabelMaps3D.forEach(labelmap3D => {
-      labelmap3D.segmentsHidden[segmentNumber] = !isVisible;
+    if (labelmap3D.metadata.hasOverlapping) {
+      /** Get all labelmaps with this segmentNumber and that
+       * are from the same series (overlapping segments) */
+      const { labelmaps3D } = getBrushStackState();
 
-      segmentsHidden = [
-        ...new Set([...segmentsHidden, ...labelmap3D.segmentsHidden]),
-      ];
-    });
+      const sameSeriesLabelMaps3D = labelmaps3D.filter(({ metadata }) => {
+        return (
+          labelmap3D.metadata.segmentationSeriesInstanceUID ===
+          metadata.segmentationSeriesInstanceUID
+        );
+      });
+
+      const possibleLabelMaps3D = sameSeriesLabelMaps3D.filter(
+        ({ labelmaps2D }) => {
+          return labelmaps2D.some(({ segmentsOnLabelmap }) =>
+            segmentsOnLabelmap.includes(segmentNumber)
+          );
+        }
+      );
+
+      possibleLabelMaps3D.forEach(labelmap3D => {
+        labelmap3D.segmentsHidden[segmentNumber] = !isVisible;
+
+        segmentsHidden = [
+          ...new Set([...segmentsHidden, ...labelmap3D.segmentsHidden]),
+        ];
+      });
+    } else {
+      labelmap3D.segmentsHidden[segmentNumber] = !isVisible;
+      segmentsHidden = [...labelmap3D.segmentsHidden];
+    }
 
     setState(state => ({ ...state, segmentsHidden }));
 
@@ -475,6 +534,7 @@ const SegmentationPanel = ({
           label={segmentLabel}
           index={segmentNumber}
           color={color}
+          labelmap3D={labelmap3D}
           visible={!labelmap3D.segmentsHidden[segmentIndex]}
           onVisibilityChange={onSegmentVisibilityChangeHandler}
         />
@@ -709,7 +769,7 @@ const _getReferencedSegDisplaysets = (StudyInstanceUID, SeriesInstanceUID) => {
   referencedDisplaysets.sort((a, b) => {
     const aNumber = Number(`${a.SeriesDate}${a.SeriesTime}`);
     const bNumber = Number(`${b.SeriesDate}${b.SeriesTime}`);
-    return aNumber - bNumber;
+    return bNumber - aNumber;
   });
 
   return referencedDisplaysets;

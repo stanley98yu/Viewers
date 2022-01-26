@@ -1,9 +1,12 @@
 import React from 'react';
+import OHIF from '@ohif/core';
+
 import init from './init.js';
 import toolbarModule from './toolbarModule.js';
 import getSopClassHandlerModule from './getOHIFDicomSegSopClassHandler.js';
 import SegmentationPanel from './components/SegmentationPanel/SegmentationPanel.js';
 import { version } from '../package.json';
+const { studyMetadataManager } = OHIF.utils;
 
 export default {
   /**
@@ -25,12 +28,13 @@ export default {
     return toolbarModule;
   },
   getPanelModule({ commandsManager, api, servicesManager }) {
-    const { UINotificationService } = servicesManager.services;
+    const { UINotificationService, LoggerService } = servicesManager.services;
 
     const ExtendedSegmentationPanel = props => {
       const { activeContexts } = api.hooks.useAppContext();
 
       const onDisplaySetLoadFailureHandler = error => {
+        LoggerService.error({ error, message: error.message });
         UINotificationService.show({
           title: 'DICOM Segmentation Loader',
           message: error.message,
@@ -78,13 +82,51 @@ export default {
       );
     };
 
+    const SegmentationPanelTabUpdatedEvent = 'segmentation-panel-tab-updated';
+
+    /**
+     * Trigger's an event to update the state of the panel's RoundedButtonGroup.
+     *
+     * This is required to avoid extension state
+     * coupling with the viewer's ToolbarRow component.
+     *
+     * @param {object} data
+     */
+    const triggerSegmentationPanelTabUpdatedEvent = data => {
+      const event = new CustomEvent(SegmentationPanelTabUpdatedEvent, {
+        detail: data,
+      });
+      document.dispatchEvent(event);
+    };
+
+    const onSegmentationsLoaded = ({ detail }) => {
+      const { segDisplaySet, segMetadata } = detail;
+      const studyMetadata = studyMetadataManager.get(
+        segDisplaySet.StudyInstanceUID
+      );
+      const referencedDisplaysets = studyMetadata.getDerivedDatasets({
+        referencedSeriesInstanceUID: segMetadata.seriesInstanceUid,
+        Modality: 'SEG',
+      });
+      triggerSegmentationPanelTabUpdatedEvent({
+        badgeNumber: referencedDisplaysets.length,
+        target: 'segmentation-panel',
+      });
+    };
+
+    document.addEventListener(
+      'extensiondicomsegmentationsegloaded',
+      onSegmentationsLoaded
+    );
+
     return {
       menuOptions: [
         {
           icon: 'list',
           label: 'Segmentations',
           target: 'segmentation-panel',
-          isDisabled: studies => {
+          stateEvent: SegmentationPanelTabUpdatedEvent,
+          isDisabled: (studies, activeViewport) => {
             if (!studies) {
               return true;
             }
@@ -97,6 +139,23 @@ export default {
                   const series = study.series[j];
 
                   if (series.Modality === 'SEG') {
+                    if (activeViewport) {
+                      const studyMetadata = studyMetadataManager.get(
+                        activeViewport.StudyInstanceUID
+                      );
+                      if (!studyMetadata) {
+                        return;
+                      }
+                      const referencedDS = studyMetadata.getDerivedDatasets({
+                        referencedSeriesInstanceUID:
+                          activeViewport.SeriesInstanceUID,
+                        Modality: 'SEG',
+                      });
+                      triggerSegmentationPanelTabUpdatedEvent({
+                        badgeNumber: referencedDS.length,
+                        target: 'segmentation-panel',
+                      });
+                    }
                     return false;
                   }
                 }

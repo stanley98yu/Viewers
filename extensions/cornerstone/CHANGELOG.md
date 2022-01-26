@@ -3,6 +3,146 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.4](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.12.3...@ohif/extension-cornerstone@2.12.4) (2022-01-20)
+
+**Note:** Version bump only for package @ohif/extension-cornerstone
+
+
+
+
+
+## [2.12.3](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.12.2...@ohif/extension-cornerstone@2.12.3) (2021-12-02)
+
+**Note:** Version bump only for package @ohif/extension-cornerstone
+
+
+
+
+
+## [2.12.2](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.12.1...@ohif/extension-cornerstone@2.12.2) (2021-10-26)
+
+**Note:** Version bump only for package @ohif/extension-cornerstone
+
+
+
+
+
+## [2.12.1](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.12.0...@ohif/extension-cornerstone@2.12.1) (2021-09-28)
+
+**Note:** Version bump only for package @ohif/extension-cornerstone
+
+
+
+
+
+# [2.12.0](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.11.0...@ohif/extension-cornerstone@2.12.0) (2021-09-23)
+
+
+### Features
+
+* Update to WADO Image Loader 4.0.3 to add dynamically imported WebAssembly codec support 🚀 ([#2537](https://github.com/OHIF/Viewers/issues/2537)) ([489d4b0](https://github.com/OHIF/Viewers/commit/489d4b0584f4657ceda1c5b9b68d5e9733827e47))
+
+
+
+
+
+# [2.11.0](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.10.10...@ohif/extension-cornerstone@2.11.0) (2021-09-09)
+
+
+### Features
+
+* OHIF-1000: Study prefetcher ([#2466](https://github.com/OHIF/Viewers/issues/2466)) ([8f26045](https://github.com/OHIF/Viewers/commit/8f2604509d24092b721f1333289d838820d68cac))
+
+
+
+
+
+## [2.10.10](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.10.9...@ohif/extension-cornerstone@2.10.10) (2021-07-26)
+
+
+### Bug Fixes
+
+* changed new image handler conditional for 0 edge case ([#2338](https://github.com/OHIF/Viewers/issues/2338)) ([b8ae92c](https://github.com/OHIF/Viewers/commit/b8ae92c2d4f733b3ca89826118029685650b396a))
+
+
+
+
+
+## [2.10.9](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.10.8...@ohif/extension-cornerstone@2.10.9) (2021-06-02)
+
+
+### Bug Fixes
+
+* **dicom-html:** Add parsed dicom meta info section ([#2419](https://github.com/OHIF/Viewers/issues/2419)) ([403688b](https://github.com/OHIF/Viewers/commit/403688b18c52468fc1101166ec0c1734fb710039))
+
+
+
+
+
+## [2.10.8](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.10.7...@ohif/extension-cornerstone@2.10.8) (2021-05-17)
+
+**Note:** Version bump only for package @ohif/extension-cornerstone
+
+
+
+
+
+## [2.10.7](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.10.6...@ohif/extension-cornerstone@2.10.7) (2021-04-15)
+
+**Note:** Version bump only for package @ohif/extension-cornerstone
+
+
+
+
+
+## [2.10.6](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.10.5...@ohif/extension-cornerstone@2.10.6) (2021-03-26)
+
+**Note:** Version bump only for package @ohif/extension-cornerstone
+
+
+
+
+
+## [2.10.5](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.10.4...@ohif/extension-cornerstone@2.10.5) (2021-03-15)
+
+**Note:** Version bump only for package @ohif/extension-cornerstone
+
+
+
+
+
+## [2.10.4](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.10.3...@ohif/extension-cornerstone@2.10.4) (2021-03-09)
+
+**Note:** Version bump only for package @ohif/extension-cornerstone
+
+
+
+
+
+## [2.10.3](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.10.2...@ohif/extension-cornerstone@2.10.3) (2021-03-03)
+
+**Note:** Version bump only for package @ohif/extension-cornerstone
+
+
+
+
+
+## [2.10.2](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.10.1...@ohif/extension-cornerstone@2.10.2) (2021-02-25)
+
+**Note:** Version bump only for package @ohif/extension-cornerstone
+
+
+
+
+
+## [2.10.1](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.10.0...@ohif/extension-cornerstone@2.10.1) (2021-02-05)
+
+**Note:** Version bump only for package @ohif/extension-cornerstone
+
+
+
+
+
 # [2.10.0](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.9.6...@ohif/extension-cornerstone@2.10.0) (2020-12-10)
 
 
