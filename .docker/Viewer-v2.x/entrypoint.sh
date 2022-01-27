@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -n "$CLIENT_ID" ] || [ -n "$HEALTHCARE_API_ENDPOINT" ]
+if [ -n "$CLIENT_ID" ] || [ -n "$HEALTHCARE_API_ENDPOINT" ] || [ ! -z "$ENDPOINT" ]
   then
     # If CLIENT_ID is specified, use the google.js configuration with the modified ID
     if [ -n "$CLIENT_ID" ]
@@ -22,6 +22,16 @@ if [ -n "$CLIENT_ID" ] || [ -n "$HEALTHCARE_API_ENDPOINT" ]
 
         # - Use SED to replace the HEALTHCARE_API_ENDPOINT that is currently in google.js
         sed -i -e "s+https://healthcare.googleapis.com/v1beta1+$HEALTHCARE_API_ENDPOINT+g" /usr/share/nginx/html/google.js
+    fi
+
+    if [ ! -z "$ENDPOINT" ]
+      then
+        echo "Vertex AI online prediction endpoint has been provided: "
+        echo $ENDPOINT
+        echo "Updating config..."
+
+        # - Use SED to replace ENDPOINT
+        sed -i -e "s@YOURONLINEPREDICTIONENDPOINT@$ENDPOINT@g" /usr/share/nginx/html/google.js
     fi
 
 	  # - Copy google.js to overwrite app-config.js
